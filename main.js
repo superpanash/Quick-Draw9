@@ -26,11 +26,30 @@ function updateCanvas(){
 }
 
 
+function preload(){
+    var classifier=ml5.imageClassifier("DoodleNet")
+}
+
+
+
+
+
 function setup(){
     canvas=createCanvas(280,280);
     canvas.center();
     background( "white");
+    canvas.mouseReleased(classifyCanvas);
 }
+
+
+function draw(){
+    strokeWeight(13);
+stroke(0);
+if(mouseIsPressed){
+    line(pmouseX,pmouseY,mouseX,mouseY);
+}
+}
+
 
 function draw(){
     check_sketch;
@@ -57,3 +76,17 @@ function check_sketch(){
     }
 }
 
+function classifyCanvas(){
+    classifier.classify(canvas,gotResult);
+}
+
+function gotResult(error,results){
+    if(error){
+        console.log(error);
+    }
+
+    else{
+        console.log(results);
+        document.getElementById("sketch").innerHTML="Your Sketch : "+results[0].label;
+    }
+}
