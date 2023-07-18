@@ -43,9 +43,10 @@ function setup(){
 
 
 function draw(){
+     
     strokeWeight(13);
-stroke(0);
-if(mouseIsPressed){
+    stroke(0);
+    if(mouseIsPressed){
     line(pmouseX,pmouseY,mouseX,mouseY);
 }
 }
@@ -82,11 +83,12 @@ function classifyCanvas(){
 
 function gotResult(error,results){
     if(error){
-        console.log(error);
+        console.error(error);
     }
 
     else{
         console.log(results);
-        document.getElementById("sketch").innerHTML="Your Sketch : "+results[0].label;
+        document.getElementById("sketch").innerHTML="Your Sketch : "+drawn_sketch;
+        document.getElementById("confidence").innerHTML=" Confidence : "+Math.round(result[0],confidence*100)+'%';
     }
 }
