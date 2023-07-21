@@ -64,3 +64,9 @@ p, span
     font-size:25px;
     
   }
+
+  #btn{
+    width:100px;
+    height:40px;
+    border-radius: 40px;
+  }
