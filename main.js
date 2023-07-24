@@ -16,19 +16,17 @@ var score=0;
 
 
 function updateCanvas(){
+    background("white");
      var random_number= Math.floor((Math.random()*quick_draw_data_set.length)+1);
     console.log(quick_draw_data_set[random_number]);
-    var sketch=quick_draw_data_set[random_number];   
+    var sketch=quick_draw_data_set[random_number];
+    document.getElementById("sketch_draw").innerHTML="Sketch To Be Drawn : "+sketch;   
 }
 
 
 function preload(){
-    var classifier=ml5.imageClassifier("DoodleNet")
+    var classifier=ml5.imageClassifier("DoodleNet");
 }
-
-
-
-
 
 function setup(){
     canvas=createCanvas(280,280);
@@ -45,37 +43,11 @@ function draw(){
     if(mouseIsPressed){
     line(pmouseX,pmouseY,mouseX,mouseY);
 }
-}
-
-
-function draw(){
-    check_sketch;
-    if(drawn_sketch=check_sketch()){
+check_sketch();
+    if(drawn_sketch==sketch){
         answer_holder="set";
         score++;
-        document.getElementById("score_span").innerHTML="Score :   "+score;
-    }
-    strokeWeight(9);
-    stroke(0);
-    if(mouseIsPressed){
-    line(pmouseX,pmouseY,mouseX,mouseY);
-}
-}
-
-
-
-function check_sketch(){    
-    timer_counter++;
-    document.getElementById("timer_span").innerHTML=" Timer : "+timer_counter;
-    console.log(timer_counter);
-    if(timer_counter>400){
-        timer_counter=0;
-        timer_check="completed";
-    }
-    if(answer_holder=set){
-        timer_check="";
-        answer_holder="";
-        updateCanvas();
+        document.getElementById("score_span").innerHTML="Score : "+score;
     }
 }
 
@@ -96,7 +68,24 @@ function gotResult(error,results){
     }
 }
 
-function erase(){
-    canvas.background("white");
+
+function check_sketch(){    
+    timer_counter++;
+    document.getElementById("timer_span").innerHTML=" Timer : "+timer_counter;
+    console.log(timer_counter);
+    if(timer_counter>400){
+        timer_counter=0;
+        timer_check="completed";
+    }
+    if(answer_holder=="set"||timer_check=="completed"){
+        timer_check="";
+        answer_holder="";
+        updateCanvas();
+    }
 }
+
+
+
+
+
 
